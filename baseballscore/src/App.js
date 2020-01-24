@@ -1,7 +1,9 @@
 //TODO: STEP 1 - Import the useState hook.
 import React, { useState, useEffect } from "react";
 import "./App.css";
-// import BottomRow from "./BottomRow";
+
+import Dashboard from "./components/Dashboard";
+import Display from "./components/Display";
 
 export const addTouchdown = currentScore => {
   return currentScore + 7;
@@ -33,55 +35,23 @@ function App() {
     }
   }, [hit, balls, strikes, foul]);
   const addAFoul = () => {
-    setFoul(true);
+    if (strikes < 2) {
+      setFoul(true);
+    }
     console.log(foul, strikes);
   };
   return (
-    <div className="container">
-      <section className="scoreboard">
-        <div className="ball">
-          <h3 className="ball__title">Balls</h3>
-          <div className="ball__value">{balls}</div>
-        </div>
-        <div className="strikes">
-          <h3 className="strikes__title">Strikes</h3>
-          <div className="Strikes__value">{strikes}</div>
-        </div>
-      </section>
-      <section className="buttons">
-        <div className="gameButtons">
-          <button
-            onClick={() => {
-              setBalls(balls + 1);
-              setHit(false);
-            }}
-            className="gameButtons__changeQuarter"
-          >
-            Add Ball
-          </button>
-          <button
-            onClick={() => {
-              setStrikes(strikes + 1);
-              setHit(false);
-            }}
-            className="gameButtons__changeQuarter"
-          >
-            Add Strikes
-          </button>
-          <button
-            onClick={() => {
-              setHit(true);
-              console.log(hit, strikes);
-            }}
-            className="gameButtons__changeQuarter"
-          >
-            Hit
-          </button>
-          <button onClick={addAFoul} className="gameButtons__changeQuarter">
-            Foul Ball
-          </button>
-        </div>
-      </section>
+    <div>
+      <Display balls={balls} strikes={strikes} />
+      <Dashboard
+        setBalls={setBalls}
+        balls={balls}
+        setStrikes={setStrikes}
+        strikes={strikes}
+        addAFoul={addAFoul}
+        setHit={setHit}
+        hit={hit}
+      />
     </div>
   );
 }
